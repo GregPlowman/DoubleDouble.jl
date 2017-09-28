@@ -7,7 +7,7 @@ import Base:
     rem, abs, rand, promote_rule,
     show, big
 
-abstract AbstractDouble{T} <: Real
+abstract type AbstractDouble{T} <: Real end
 
 # a Single is a wrapper for an ordinary floating point type such that arithmetic operations will return Doubles
 immutable Single{T<:AbstractFloat} <: AbstractDouble{T}
@@ -21,7 +21,7 @@ immutable Double{T<:AbstractFloat} <: AbstractDouble{T}
 
     # "Normalise" Doubles to ensure abs(lo) <= 0.5eps(hi)
     # assumes abs(u) > abs(v): if not, use Single + Single
-    function Double(u::T, v::T)
+    function Double{T}(u::T, v::T) where T
         w = u + v
         new(w, (u-w) + v)
     end
